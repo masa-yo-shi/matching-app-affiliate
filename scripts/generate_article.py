@@ -8,6 +8,7 @@
 
 import argparse
 import csv
+import json
 import os
 import sys
 from datetime import datetime
@@ -96,12 +97,56 @@ def load_app_data(app_name: str) -> Dict[str, str]:
     )
 
 
-def load_prompt_template(article_type: str) -> str:
+def load_prompt_from_json(prompt_id: str) -> str:
+    """
+    JSONファイルからプロンプトを読み込む
+
+    Args:
+        prompt_id: プロンプトID
+
+    Returns:
+        プロンプト内容
+
+    Raises:
+        TemplateNotFoundError: プロンプトが見つからない場合
+    """
+    json_path = get_project_root() / 'data' / 'prompts.json'
+
+    if not json_path.exists():
+        raise TemplateNotFoundError(
+            f"プロンプトファイルが見つかりません: {json_path}"
+        )
+
+    try:
+        with open(json_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+
+        prompts = data.get('prompts', [])
+        prompt = next((p for p in prompts if p['id'] == prompt_id), None)
+
+        if not prompt:
+            available = ', '.join([p['id'] for p in prompts])
+            raise TemplateNotFoundError(
+                f"プロンプトID '{prompt_id}' が見つかりません。\n"
+                f"利用可能なプロンプト: {available}\n"
+                f"プロンプトを確認: python scripts/manage_prompts.py list"
+            )
+
+        return prompt['content']
+
+    except json.JSONDecodeError as e:
+        raise ArticleGenerationError(f"JSONファイルのパースに失敗: {e}")
+    except Exception as e:
+        raise ArticleGenerationError(f"プロンプトの読み込みに失敗: {e}")
+
+
+def load_prompt_template(article_type: str, prompt_id: Optional[str] = None) -> str:
     """
     プロンプトテンプレートを読み込む
 
     Args:
         article_type: 記事タイプ (review, ranking, howto)
+        prompt_id: プロンプトID (指定した場合はJSONから読み込む)
 
     Returns:
         プロンプトテンプレート文字列
@@ -109,13 +154,23 @@ def load_prompt_template(article_type: str) -> str:
     Raises:
         TemplateNotFoundError: テンプレートが見つからない場合
     """
+    # プロンプトIDが指定されている場合はJSONから読み込む
+    if prompt_id:
+        return load_prompt_from_json(prompt_id)
+
+    # デフォルト: テキストファイルから読み込む
     template_path = get_project_root() / 'data' / 'prompts' / f'{article_type}.txt'
 
     if not template_path.exists():
-        raise TemplateNotFoundError(
-            f"プロンプトテンプレートが見つかりません: {template_path}\n"
-            f"対応している記事タイプ: review"
-        )
+        # テキストファイルがない場合は、JSONのデフォルトを使用
+        try:
+            return load_prompt_from_json(f'default-{article_type}')
+        except TemplateNotFoundError:
+            raise TemplateNotFoundError(
+                f"プロンプトテンプレートが見つかりません: {template_path}\n"
+                f"対応している記事タイプ: review\n"
+                f"またはカスタムプロンプトを使用: --prompt <prompt_id>"
+            )
 
     try:
         with open(template_path, 'r', encoding='utf-8') as f:
@@ -273,6 +328,12 @@ def parse_arguments() -> argparse.Namespace:
         help='アプリ名 (例: Tinder, Pairs)'
     )
 
+    parser.add_argument(
+        '--prompt',
+        type=str,
+        help='カスタムプロンプトID (prompts.jsonに登録されたプロンプトを使用)'
+    )
+
     return parser.parse_args()
 
 
@@ -300,7 +361,9 @@ def main() -> int:
 
         # プロンプトテンプレート読み込み
         print("📋 プロンプトテンプレートを準備中...")
-        template = load_prompt_template(args.type)
+        if args.prompt:
+            print(f"   カスタムプロンプトを使用: {args.prompt}")
+        template = load_prompt_template(args.type, args.prompt)
         prompt = fill_template(template, app_data)
         print(f"   ✓ プロンプトを生成しました")
         print()

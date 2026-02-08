@@ -50,10 +50,11 @@ python scripts/generate_article.py --type review --app Tinder
 ### プレビュー
 
 ```bash
-# ローカルサーバーを起動
-python scripts/preview.py
+# localhostプレビューサーバー (推奨・Ruby不要)
+python3 scripts/serve_preview.py
 
-# ブラウザで http://localhost:4000 を開く
+# ブラウザで http://localhost:8000 を開く
+# 記事一覧と各記事のプレビューが表示されます
 ```
 
 ### 公開
