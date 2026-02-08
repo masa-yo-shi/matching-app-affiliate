@@ -1,0 +1,6 @@
+app_name,category,price,target_age,features,affiliate_url,rating
+Tinder,カジュアル,無料(課金あり),20-30代,GPS機能・スワイプ式・即マッチング,https://example.com/tinder,4.2
+Pairs,真剣恋活,3590円/月,20-40代,コミュニティ機能・本人確認・安全性重視,https://example.com/pairs,4.5
+Omiai,真剣婚活,3980円/月,25-40代,身分証明必須・真剣度高い・安心のサクラゼロ,https://example.com/omiai,4.3
+with,恋活,3600円/月,20-30代,性格診断・相性マッチング・メンタリストDaiGo監修,https://example.com/with,4.4
+タップル,カジュアル,3700円/月,18-25代,趣味でつながる・おでかけ機能・気軽な出会い,https://example.com/tapple,4.1

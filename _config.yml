@@ -1,0 +1,91 @@
+# サイト基本情報
+title: マッチングアプリ完全ガイド
+description: 20-30代男性のためのマッチングアプリ情報サイト。実際に使ったレビュー、おすすめランキング、攻略法を徹底解説。
+baseurl: "" # サブディレクトリの場合のみ設定 (例: /blog)
+url: "https://yourusername.github.io" # 本番URLに変更してください
+
+# 著者情報
+author:
+  name: マッチングアプリ研究所
+  email: contact@example.com
+
+# SEO設定
+lang: ja
+timezone: Asia/Tokyo
+
+# Markdown設定
+markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    block:
+      line_numbers: false
+
+# パーマリンク構造
+permalink: /:categories/:year/:month/:day/:title/
+
+# プラグイン
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-feed
+
+# デフォルトのFront Matter
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+      author: "マッチングアプリ研究所"
+      show_date: true
+
+# ページネーション
+paginate: 10
+paginate_path: "/page:num/"
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+  - .sass-cache
+  - .jekyll-cache
+  - gemfiles
+  - scripts
+  - data
+  - requirements.txt
+  - .env
+  - .env.example
+  - venv
+  - README.md
+
+# Collections (将来的に拡張可能)
+collections:
+  apps:
+    output: true
+    permalink: /apps/:name/
+
+# サイトナビゲーション
+navigation:
+  - title: ホーム
+    url: /
+  - title: レビュー
+    url: /category/review/
+  - title: ランキング
+    url: /category/ranking/
+  - title: 使い方
+    url: /category/howto/
+
+# SNS
+social:
+  twitter: your_twitter_handle
+  facebook: your_facebook_page
+
+# Google Analytics (設定する場合)
+# google_analytics: UA-XXXXXXXXX-X
+
+# その他の設定
+show_excerpts: true

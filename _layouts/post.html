@@ -1,0 +1,104 @@
+---
+layout: default
+---
+
+<article class="post">
+  <!-- Article Header -->
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="{{ page.date | date_to_xmlschema }}">
+        {{ page.date | date: "%Y年%m月%d日" }}
+      </time>
+      {% if page.categories %}
+      <span class="separator">•</span>
+      <div class="post-categories">
+        {% for category in page.categories %}
+        <a href="{{ site.baseurl }}/category/{{ category | slugify }}/" class="category-link">
+          {{ category }}
+        </a>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+
+    <h1 class="post-title">{{ page.title }}</h1>
+
+    {% if page.description %}
+    <p class="post-description">{{ page.description }}</p>
+    {% endif %}
+
+    {% if page.image %}
+    <div class="post-image">
+      <img src="{{ page.image | relative_url }}" alt="{{ page.title }}" loading="lazy">
+    </div>
+    {% endif %}
+  </header>
+
+  <!-- Article Content -->
+  <div class="post-content">
+    {{ content }}
+  </div>
+
+  <!-- Tags -->
+  {% if page.tags %}
+  <footer class="post-footer">
+    <div class="post-tags">
+      <span class="tags-label">タグ:</span>
+      {% for tag in page.tags %}
+      <a href="{{ site.baseurl }}/tag/{{ tag | slugify }}/" class="tag">
+        #{{ tag }}
+      </a>
+      {% endfor %}
+    </div>
+  </footer>
+  {% endif %}
+
+  <!-- Related Posts -->
+  {% if site.related_posts.size > 0 %}
+  <aside class="related-posts">
+    <h2>関連記事</h2>
+    <ul class="related-posts-list">
+      {% for post in site.related_posts limit:3 %}
+      <li>
+        <a href="{{ post.url | relative_url }}">
+          {% if post.image %}
+          <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
+          {% endif %}
+          <div class="related-post-info">
+            <h3>{{ post.title }}</h3>
+            <time datetime="{{ post.date | date_to_xmlschema }}">
+              {{ post.date | date: "%Y年%m月%d日" }}
+            </time>
+          </div>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </aside>
+  {% endif %}
+
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "{{ page.title }}",
+    "description": "{{ page.description | default: page.excerpt | strip_html | truncate: 160 }}",
+    "image": "{{ page.image | absolute_url }}",
+    "datePublished": "{{ page.date | date_to_xmlschema }}",
+    "dateModified": "{{ page.last_modified_at | default: page.date | date_to_xmlschema }}",
+    "author": {
+      "@type": "Person",
+      "name": "{{ page.author | default: site.author.name }}"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "{{ site.title }}",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "{{ '/assets/images/logo.png' | absolute_url }}"
+      }
+    }
+  }
+  </script>
+</article>

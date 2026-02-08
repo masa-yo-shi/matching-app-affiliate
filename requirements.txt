@@ -1,0 +1,28 @@
+# Claude API
+anthropic==0.40.0
+
+# Environment variables
+python-dotenv==1.0.1
+
+# YAML processing
+pyyaml==6.0.2
+
+# CSV handling (built-in, but for reference)
+# csv - standard library
+
+# Date handling
+python-dateutil==2.9.0
+
+# Text processing
+markdown==3.7
+
+# CLI argument parsing (built-in, but for reference)
+# argparse - standard library
+
+# File system operations (built-in)
+# pathlib - standard library
+
+# Optional: For future enhancements
+# requests==2.32.3  # HTTP requests
+# beautifulsoup4==4.12.3  # HTML parsing
+# selenium==4.28.1  # Browser automation
