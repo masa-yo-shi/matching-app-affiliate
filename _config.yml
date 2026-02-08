@@ -1,8 +1,8 @@
 # サイト基本情報
 title: マッチングアプリ完全ガイド
 description: 20-30代男性のためのマッチングアプリ情報サイト。実際に使ったレビュー、おすすめランキング、攻略法を徹底解説。
-baseurl: "" # サブディレクトリの場合のみ設定 (例: /blog)
-url: "https://yourusername.github.io" # 本番URLに変更してください
+baseurl: "/matching-app-affiliate" # サブディレクトリの場合のみ設定 (例: /blog)
+url: "https://masa-yo-shi.github.io/matching-app-affiliate"
 
 # 著者情報
 author:
