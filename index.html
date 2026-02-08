@@ -1,0 +1,213 @@
+---
+layout: default
+title: ホーム
+---
+
+<div class="home">
+  <header class="home-header">
+    <h1>マッチングアプリ完全ガイド</h1>
+    <p class="lead">20-30代男性のためのマッチングアプリ情報サイト。実際に使ったレビュー、おすすめランキング、攻略法を徹底解説。</p>
+  </header>
+
+  <section class="latest-posts">
+    <h2>最新記事</h2>
+
+    {% if site.posts.size > 0 %}
+      <div class="post-list">
+        {% for post in site.posts limit:10 %}
+          <article class="post-item">
+            <div class="post-meta">
+              <time datetime="{{ post.date | date_to_xmlschema }}">
+                {{ post.date | date: "%Y年%m月%d日" }}
+              </time>
+              {% if post.categories %}
+                <span class="separator">•</span>
+                <div class="post-categories">
+                  {% for category in post.categories %}
+                    <span class="category-badge">{{ category }}</span>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+
+            <h3 class="post-title">
+              <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+            </h3>
+
+            {% if post.description %}
+              <p class="post-excerpt">{{ post.description }}</p>
+            {% elsif post.excerpt %}
+              <p class="post-excerpt">{{ post.excerpt | strip_html | truncate: 200 }}</p>
+            {% endif %}
+
+            {% if post.tags %}
+              <div class="post-tags">
+                {% for tag in post.tags limit:3 %}
+                  <span class="tag">#{{ tag }}</span>
+                {% endfor %}
+              </div>
+            {% endif %}
+
+            <a href="{{ post.url | relative_url }}" class="read-more">続きを読む →</a>
+          </article>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="no-posts">
+        <p>記事はまだ公開されていません。</p>
+        <p>下書きを確認して公開してください。</p>
+      </div>
+    {% endif %}
+  </section>
+
+  <style>
+    .home-header {
+      text-align: center;
+      padding: 3rem 0;
+      border-bottom: 2px solid #e0e0e0;
+      margin-bottom: 3rem;
+    }
+
+    .home-header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: #2c3e50;
+    }
+
+    .lead {
+      font-size: 1.2rem;
+      color: #666;
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.8;
+    }
+
+    .latest-posts h2 {
+      font-size: 1.8rem;
+      margin-bottom: 2rem;
+      color: #2c3e50;
+      padding-bottom: 0.5rem;
+      border-bottom: 3px solid #3498db;
+    }
+
+    .post-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .post-item {
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .post-item:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .post-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #666;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .separator {
+      color: #ccc;
+    }
+
+    .post-categories {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .category-badge {
+      background: #3498db;
+      color: white;
+      padding: 0.2rem 0.6rem;
+      border-radius: 12px;
+      font-size: 0.8rem;
+    }
+
+    .post-title {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .post-title a {
+      color: #2c3e50;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .post-title a:hover {
+      color: #3498db;
+    }
+
+    .post-excerpt {
+      color: #666;
+      line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+
+    .post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .tag {
+      background: #f5f5f5;
+      color: #666;
+      padding: 0.3rem 0.7rem;
+      border-radius: 4px;
+      font-size: 0.85rem;
+    }
+
+    .read-more {
+      display: inline-block;
+      color: #3498db;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    .read-more:hover {
+      color: #2980b9;
+    }
+
+    .no-posts {
+      text-align: center;
+      padding: 3rem;
+      background: #f8f9fa;
+      border-radius: 8px;
+    }
+
+    .no-posts p {
+      margin-bottom: 1rem;
+      color: #666;
+    }
+
+    @media (max-width: 768px) {
+      .home-header h1 {
+        font-size: 2rem;
+      }
+
+      .lead {
+        font-size: 1rem;
+      }
+
+      .post-item {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</div>
